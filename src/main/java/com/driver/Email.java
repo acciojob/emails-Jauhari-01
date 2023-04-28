@@ -28,30 +28,33 @@ public class Email {
         if(!oldPassword.equals(this.password)){
             return;
         }
+        if(newPassword.length() < 8){
+            return;
+        }
 
-        boolean[] flags = new boolean[5];
+        boolean[] flags = new boolean[4];
         //flag 0 for checking digit
         //flag 1 for checking uppercase
-        //flag 2 for checking is character
-        //flag 3 for checking is lowerCase
+        //flag 3 for checking is special character
+        //flag 2 for checking is lowerCase
 
         for(char c : newPassword.toCharArray()){
             if(Character.isDigit(c)){
                 flags[0] = true;
             }
-            if(Character.isLetter(c)){
-                flags[2] = true;
-            }
+            // if(Character.isLetter(c)){
+            //     flags[2] = true;
+            // }
             if(Character.isUpperCase(c)){
                 flags[1] = true;
             }
             if(Character.isLowerCase(c)){
-                flags[3] = true;
+                flags[2] = true;
             }
             if (!Character.isDigit(c)
                 && !Character.isLetter(c)
                 && !Character.isWhitespace(c) ){
-                    flags[4] = true;
+                    flags[3] = true;
                 }
 
             for(boolean f : flags){
