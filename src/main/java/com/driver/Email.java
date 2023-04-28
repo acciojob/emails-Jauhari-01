@@ -10,6 +10,10 @@ public class Email {
         this.password = "Accio@123";
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getEmailId() {
         return emailId;
     }
@@ -25,45 +29,29 @@ public class Email {
         // 3. It contains at least one lowercase letter
         // 4. It contains at least one digit
         // 5. It contains at least one special character. Any character apart from alphabets and digits is a special character
-        if(!oldPassword.equals(this.password)){
-            return;
-        }
-        if(newPassword.length() < 8){
-            return;
-        }
-
-        boolean[] flags = new boolean[4];
-        //flag 0 for checking digit
-        //flag 1 for checking uppercase
-        //flag 3 for checking is special character
-        //flag 2 for checking is lowerCase
-
-        for(char c : newPassword.toCharArray()){
-            if(Character.isDigit(c)){
-                flags[0] = true;
-            }
-            // if(Character.isLetter(c)){
-            //     flags[2] = true;
-            // }
-            if(Character.isUpperCase(c)){
-                flags[1] = true;
-            }
-            if(Character.isLowerCase(c)){
-                flags[2] = true;
-            }
-            if (!Character.isDigit(c)
-                && !Character.isLetter(c)
-                && !Character.isWhitespace(c) ){
-                    flags[3] = true;
-                }
-
-            for(boolean f : flags){
-                if(f==false){
-                    return;
+        boolean flagUp = false, flagLow = false, flagDig = false, flagSpcl = false;
+        if (this.password.equals(oldPassword)){
+            if (newPassword.length() >= 8){
+                for (int i=0; i<newPassword.length(); i++){
+                    char chr = newPassword.charAt(i);
+                    if (chr >= 65 && chr <= 90){
+                        flagUp = true;
+                    }
+                    else if (chr >= 97 && chr <= 122){
+                        flagLow = true;
+                    }
+                    else if (chr >= 48 && chr <=57){
+                        flagDig = true;
+                    }
+                    else{
+                        flagSpcl = true;
+                    }
+                    if (flagUp && flagLow && flagDig && flagSpcl){
+                        this.password = newPassword;
+                        break;
+                    }
                 }
             }
-
-            this.password = newPassword;
         }
     }
 }
